@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% block title %}SVM IMOC{% endblock %}
+
+{% block header %}
+<!-- Navbar -->
+<nav class="navbar navbar-default shadow position-sticky fixed-top bg-white ">
+  <div class="container">
+    <div class="navbar-header">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="../static/images/logopython.svg" alt="logo"></a>
+    </div>
+      <div id="myNavbar">
+        <ul class="nav justify-content-center ">
+          <li><a href="{% url 'home' %}" class="p-2 text-dark font-weight-bold text-decoration-none">HOME</a></li>
+          <li><a href="{% url 'svm_imoc' %}" class="p-2 text-dark font-weight-bold text-decoration-none active">SVM One
+              Class</a>
+          </li>
+          <li><a href="{% url 'test' %}" class="p-2 text-dark font-weight-bold text-decoration-none ">TEST</a></li>
+          <li>
+      
+            <div class="dropdown">
+              <a class="p-2 text-dark font-weight-bold text-decoration-none dropdown-toggle" style="letter-spacing:1px"
+                data-toggle="dropdown">Chào mừng Admin</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" style="letter-spacing:1px" href="{% url 'logout' %}">Đăng Xuất</a>
+              </div>
+            </div>
+      
+      
+      
+          </li>
+          <li><a>
+              <img src="../static/images/accout.svg"
+                style="border-radius:50%;border:1px solid black;width:3em;top:100%;transform:translateY(-25%)" />
+            </a>
+        </ul>
+      </div>
+  </div>
+
+  </div>
+</nav>
+<!-- end navbar -->
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+<!-- start selection -->
+<div class="container-fluid bg-1 text-center">
+  <h3 class="margin">What is SVM One Class?</h3>
+  <p>
+    SVM One Class is an unsupervised algorithm that learns a decision function for novelty detection:
+  </p>
+  <p>
+    classifying new data as similar or different to the training set.
+  </p>
+  <p></p>
+</div>
+
+<div class="container-fluid bg-dark m-0">
+  <div class="row text-center container col-12 d-flex justify-content-around">
+    <div class="col col-md-3 bg-secondary p-3 rounded shadow">
+      <h3>Cut</h3>
+      <p>Select the file to cut and where to save the file </p>
+      <button class="btn btn-primary "><b>Cut</b> <b>File</b></button>
+    </div>
+    <div class="col col-md-4 bg-secondary p-3 rounded shadow">
+      <h3>Train</h3>
+      <p>Select the folder containing the test file and the folder containing the cut data to train the models</p>
+      <button class="btn btn-primary"><b>Train</b> <b>File</b></button>
+    </div>
+    <div class="col col-md-3 bg-secondary p-3 rounded shadow">
+
+      <h3>Test</h3>
+      <p>Select the test file and the folder containing the model to output the final result.</p>
+      <button class="btn btn-primary"><b>Test</b> <b>File</b></button>
+
+    </div>
+
+  </div>
+  <div class="row text-center m-0 container-fluid">
+    <div class="p-3 mt-2 col-12 m-0 bg-success rounded-lg shadow">
+      <h3>Performance</h3>
+      <p>Select the folder containing the test file and the folder containing the cut data to train the models</p>
+      <button class="btn btn-primary"><b>Train</b> <b>File</b></button>
+    </div>
+  </div>
+</div>
+<!-- end selection -->
+<!-- start form cut file -->
+<div id="form-cut" class="d-none">
+  <div style="top:0;left:0;position:absolute;width:100vw;height:100vh;background:rgba(0, 0, 0, 0.75)">
+    <div>
+      <form class="was-validated container col-6 position-absolute bg-info p-5 rounded shadow"
+        style="transform:translate(50%,50%)">
+        <h1 class="text-warning text-center"><span><b>CUT</b></span></h1>
+
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-file-cut" accept=".csv">
+          <label class="custom-file-label" for="input-file" id="lable-input-file-cut">Path of data file...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">Number of File</span>
+          </div>
+        </div>
+        <div class="custom-file mb-3">
+
+          <input type="file" class="custom-file-input" id="input-save-cut" accept="folder">
+          <label class="custom-file-label" for="input-file" id="lable-input-save-cut">Path save file cut...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <button class="btn btn-warning text-white col-12 p-2" id="btn-cut"><b>Cut</b></button>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- end form cut file--->
+
+<!-- start form test file -->
+<div id="form-test" class="d-none">
+  <div style="top:0;left:0;position:absolute;width:100vw;height:100vh;background:rgba(0, 0, 0, 0.75)">
+    <div>
+      <form class="was-validated container col-6 position-absolute bg-info p-5 rounded shadow"
+        style="transform:translate(50%,50%)">
+        <h1 class="text-warning text-center"><span><b>TEST</b></span></h1>
+
+
+
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-file-test" accept=".csv">
+          <label class="custom-file-label" for="input-file" id="lable-input-file-test">Path of test file...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-model-test">
+          <label class="custom-file-label" for="input-file" id="lable-input-model-test">Path of models folder...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-save-test" accept="folder">
+          <label class="custom-file-label" for="input-file" id="lable-input-save-test">Path save file cut...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <button class="btn btn-warning text-white col-12 p-2" id="btn-test"><b>Test</b></button>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- end form test file--->
+
+<!-- start form train file -->
+<div id="form-train" class="d-none">
+  <div style="top:0;left:0;position:absolute;width:100vw;height:100vh;background:rgba(0, 0, 0, 0.75)">
+    <div>
+      <form class="was-validated container col-6 position-absolute bg-info p-5 rounded shadow"
+        style="transform:translate(50%,50%)">
+        <h1 class="text-warning text-center"><span><b>TRAIN</b></span></h1>
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-folder_data_cut-train">
+          <label class="custom-file-label" for="input-file" id="lable-input-folder_data_cut-train">Path of data cut
+            folder...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-test_file-train">
+          <label class="custom-file-label" for="input-file" id="lable-input-test_file-train">Path of test
+            file...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1" id="input-nu-train" max="1" min=0
+            step="0.005">
+          <div class="input-group-append">
+            <span class="input-group-text" id="label-input-nu-train">Nu</span>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1" id="input-gamma-train" min="0">
+          <div class="input-group-append">
+            <span class="input-group-text" id="label-input-gamma-train">Gamma</span>
+          </div>
+        </div>
+
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-save_model-train" accept="folder">
+          <label class="custom-file-label" for="input-file" id="lable-input-save_model-train">Path save file
+            model...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <button class="btn btn-warning text-white col-12 p-2" id="btn-train"><b>Train</b></button>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- end form train file--->
+
+<!-- start train svm -->
+<div id="form-svm-train" class="d-none">
+  <div style="top:0;left:0;position:absolute;width:100vw;height:100vh;background:rgba(0, 0, 0, 0.75)">
+    <div>
+      <form class="was-validated container col-6 position-absolute bg-info p-5 rounded shadow"
+        style="transform:translate(50%,50%)">
+        <h1 class="text-warning text-center"><span><b>SVM ONE CLASS</b></span></h1>
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="input-file_csv-train">
+          <label class="custom-file-label" for="input-file" id="lable-input-folder_data_cut-train">Path to file csv
+            ...</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1" id="input-number-batch" min=1 step="1">
+          <div class="input-group-append">
+            <span class="input-group-text" id="label-input-number-batch">Number of batch</span>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1" id="input-nu-train" max="1" min=0
+            step="0.005">
+          <div class="input-group-append">
+            <span class="input-group-text" id="label-input-nu-train">Nu</span>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1" id="input-gamma-train" min="0">
+          <div class="input-group-append">
+            <span class="input-group-text" id="label-input-gamma-train">Gamma</span>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="1" value="1" id="input-age-train" min=1 step="1">
+          <div class="input-group-append">
+            <span class="input-group-text" id="label-input-age-train">Age</span>
+          </div>
+        </div>
+        <button class="btn btn-warning text-white col-12 p-2" id="btn-train"><b>Train</b></button>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- end svm -->
+
+<script>
+  document.getElementById("input-file").addEventListener("change", (e) => {
+    document.getElementById("lable-input-file").innerText = e.target.files[0].name;
+  })
+</script>
+
+{% endblock %}
+
+{% block footer %}
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+  <p>
+    Website Made By
+    <a href="https://www.facebook.com/hoangkhang2k/">Vũ Hoàng Khang</a>
+  </p>
+</footer>
+{% endblock%}

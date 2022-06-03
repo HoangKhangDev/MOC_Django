@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block header %}
+<!-- Navbar -->
+<nav class="navbar navbar-default shadow position-sticky fixed-top bg-white ">
+  <div class="container">
+    <div class="navbar-header">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+<a class="navbar-brand" href="{% url 'home' %}"><img src="../static/images/logopython.svg" alt="logo"></a>    </div>
+    <div id="myNavbar">
+      <ul class="nav justify-content-center ">
+        <li><a href="{% url 'home' %}" class="p-2 text-dark font-weight-bold text-decoration-none active">HOME</a></li>
+        <li><a href="{% url 'svm_imoc' %}" class="p-2 text-dark font-weight-bold text-decoration-none ">SVM One Class</a>
+        </li>
+        <li><a href="{% url 'test' %}" class="p-2 text-dark font-weight-bold text-decoration-none ">TEST</a></li>
+        <li>
+        
+        <div class="dropdown">
+          <a class="p-2 text-dark font-weight-bold text-decoration-none dropdown-toggle" style="letter-spacing:1px" data-toggle="dropdown">Chào mừng Admin</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" style="letter-spacing:1px" href="{% url 'logout' %}">Đăng Xuất</a>
+          </div>
+        </div>
+        
+        
+        
+        </li>
+        <li><a>
+                <img src="../static/images/accout.svg"
+                  style="border-radius:50%;border:1px solid black;width:3em;top:100%;transform:translateY(-25%)" />
+        </a>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+{% if uploaded_file_url %}
+<h1>{{uploaded_file_url}}</h1>
+{% endif %}
+<!-- First Container -->
+<div class="container-fluid bg-1 text-center">
+  <h3 class="margin">Who Am I?</h3>
+  <p>
+    Please tell me who are you? If you want to use the function of this site!!!
+  </p>
+  <p></p>
+  <form method="get" action="#">
+    <button type="submit" class="btn btn-info">
+      <h5><b>Login</b></h5>
+    </button>
+  </form>
+</div>
+
+<!-- Second Container -->
+<div class="container-fluid bg-2 text-center">
+  <h3 class="margin">Upload File?</h3>
+  <p>
+    You can upload files for Support Vector Method One Class training and create
+    models for faster analysis. Please select the file with the extension "csv"
+  </p>
+  <a href="#" class="btn btn-default btn-lg">
+    <span class="glyphicon glyphicon-search"></span> Search
+  </a>
+</div>
+
+<!-- 
+<h1>
+  Download File Using
+  JavaScript/jQuery
+</h1>
+
+<h3>
+  For Downloading, Click
+  on the below link.
+</h3>
+
+<a id="link" href="no-script.html">
+  Download this file
+</a>
+
+<script>
+  $(document).ready(function () {
+    $("#link").click(function (e) {
+      e.preventDefault();
+      window.location.href
+        = {% load static %} 
+        "{% static 'data/data.csv' %}";
+    });
+  });
+</script> -->
+
+<!-- Third Container (Grid) -->
+<!-- <div class="container-fluid bg-3 text-center">
+  <h3 class="margin">Where To Find Me?</h3>
+  <br />
+  <div class="row">
+    <div class="col-sm-4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <img
+        src="birds1.jpg"
+        class="img-responsive margin"
+        style="width: 100%"
+        alt="Image"
+      />
+    </div>
+    <div class="col-sm-4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <img
+        src="birds2.jpg"
+        class="img-responsive margin"
+        style="width: 100%"
+        alt="Image"
+      />
+    </div>
+    <div class="col-sm-4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <img
+        src="birds3.jpg"
+        class="img-responsive margin"
+        style="width: 100%"
+        alt="Image"
+      />
+    </div>
+  </div>
+</div> -->
+{% endblock %}
+{% block footer %}
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+  <p>
+    Website Made By
+    <a href="https://www.facebook.com/hoangkhang2k/">Vũ Hoàng Khang</a>
+  </p>
+</footer>
+
+{% endblock%}

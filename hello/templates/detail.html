@@ -1,0 +1,25 @@
+{% extends "pages/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="main container-fluid p-5">
+    <table class="table table-striped table-hover">
+        <!-- <thead>
+            <td>#</td>
+            <td>Label</td>
+            <td>Name</td>
+            <td>%</td>
+        </thead> -->
+        <tbody>
+           {% if mang %}
+                {% for item in mang %}
+                <h1>{{item}}</h1>
+                {% endfor %}
+           {% endif %}
+
+        </tbody>
+      </table>
+      <h1>{{main}}</h1>
+      {% load static %}
+    <img src="{% static 'img/hinhnen.jpg' %}" style="width: 100%;" alt="My image">
+</div>
+{% endblock %}

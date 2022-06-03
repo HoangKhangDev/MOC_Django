@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block title %}Test{% endblock %}
+
+{% block header %}
+<!-- Navbar -->
+<nav class="navbar navbar-default shadow position-sticky fixed-top bg-white ">
+  <div class="container">
+    <div class="navbar-header">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="../static/images/logopython.svg" alt="logo"></a>
+    </div>
+    <div id="myNavbar">
+      <ul class="nav justify-content-center ">
+        <li><a href="{% url 'home' %}" class="p-2 text-dark font-weight-bold text-decoration-none ">HOME</a></li>
+        <li><a href="{% url 'svm_imoc' %}" class="p-2 text-dark font-weight-bold text-decoration-none ">SVM One
+            Class</a>
+        </li>
+        <li><a href="{% url 'test' %}" class="p-2 text-dark font-weight-bold text-decoration-none active">TEST</a></li>
+        <li>
+
+          <div class="dropdown">
+            <a class="p-2 text-dark font-weight-bold text-decoration-none dropdown-toggle" style="letter-spacing:1px"
+              data-toggle="dropdown">Chào mừng Admin</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" style="letter-spacing:1px" href="{% url 'logout' %}">Đăng Xuất</a>
+            </div>
+          </div>
+
+
+
+        </li>
+        <li><a>
+            <img src="../static/images/accout.svg"
+              style="border-radius:50%;border:1px solid black;width:3em;top:100%;transform:translateY(-25%)" />
+          </a>
+      </ul>
+    </div>
+  </div>
+
+  </div>
+</nav>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- First Container
+<div class="container-fluid bg-1 text-center">
+  <h3 class="margin">TEST?</h3>
+  <p>
+    This part is used to try algorithms and compare with SVM algorithm IMOC!!!
+  </p>
+  <p></p>
+</div> -->
+
+
+<!-- form -->
+<div class="container-fluid bg-2" style="height: 100vh; max-height:100vh">
+  <div class="container bg-info p-4 rounded shadow"
+    style="position: absolute;top :15vh;left:50%;transform:translateX(-50%)">
+
+    {% if img %}
+    <div class="d-flex flex-row">
+      <div class="text-center col-8 m-0 p-0 ">
+        <h2>Chart</h2>
+        <div >
+          <a href="data:image/png;base64,{{img}}" download="Chart">
+            <img src="data:image/png;base64,{{img}}" class="m-0 rounded shadow" style="width:100%;height:auto">
+            <span class="btn btn-success rounded shadow btn-outline-white p-2 mt-2">Save Image</span>
+          </a>
+
+        </div>
+      </div>
+      <div class="col-4">
+        <h2 class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+          <b>List Accuracy</b>
+        </h2>
+        <table class="table table-hover" style="font-size: 0.75em;">
+          <tr class="table-dark">
+            <th>Age</th>
+            <th>Accuracy</th>
+          </tr>
+          {% for item in array %}
+          <tr class="table-primary">
+            <td>{{item.numbercut}}</td>
+            <td>{{item.accuracy}}</td>
+          </tr>
+          {%endfor %}
+        </table>
+        <button class="btn btn-primary mt-2 d-none" onclick="tableToCSV()">Save Data</button>
+      </div>
+    </div>
+    <div class="text-center col-8">
+      <form action="{% url 'test'%}" method="get">
+        <button class="btn-warning rounded shadow btn btn-outline-dark text-white"><b>TEST AGAIN</b></button>
+      </form>
+    </div>
+    {% else %}
+    <form class="was-validated " method="post" action="{% url 'process_test' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="select">Algorithm</label>
+      <select class="custom-select" name="select">
+        <option value="GaussianNB">Naive Bayes(GaussianNB)</option>
+        <option value="DecisionTreeClassifier">Decision Tree</option>
+        <option value="KNeighborsClassifier">K-Nearest Neighbors</option>
+        <option value="BernoulliNB">BernoulliNB</option>
+        <option value="ExtraTreeClassifier">ExtraTreeClassifier</option>
+        <option value="BaggingClassifier">Bagging classifier</option>
+        <option value="AdaBoostClassifier">AdaBoost Classifier</option>
+        <option value="MLPClassifier">MLPClassifier</option>
+        <option value="LinearDiscriminantAnalysis">Linear Discriminant Analysis</option>
+        <option value="RandomForestClassifier">RandomForestClassifier</option>
+      </select>
+      <div class="p-0 col-12 my-3 d-flex flex-row justify-content-between">
+        <div class="input-group col-3 p-0 ">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-dark text-white">Number of Age</span>
+          </div>
+          <input type="number" class="form-control" min="1" placeholder="Enter Number of Age..." value="1"
+            name="number-age" id="input-age">
+        </div>
+        <div class="input-group col-3 p-0 ">
+          <input type="number" class="form-control" min="1" placeholder="Enter Number of Cut..." value="1"
+            name="number-cut" id="input-cut">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-dark text-white">Number of Cuts</span>
+          </div>
+        </div>
+      </div>
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile" name="file-csv-open" accept=".csv">
+        <label class="custom-file-label label-browser" for="customFile" name='label-browser'>Select the file with .csv
+          extension to execute the test</label>
+        <div class="d-flex justify-content-center mt-3">
+          <button class="btn btn-primary shadow col-4 d-none" id="btn-submit"
+            onclick="e.target.preventDefault()">RUN</button>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+          <button class="btn btn-primary shadow col-4 d-none" id="btn-submit"
+            onclick="e.target.preventDefault()">RUN</button>
+        </div>
+      </div>
+      {% endif %}
+
+    </form>
+  </div>
+</div>
+
+
+<style>
+  .custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Choose File";
+  }
+</style>
+<script>
+
+  {% if img %}
+  function tableToCSV() {
+
+    // Variable to store the final csv data
+    var csv_data = [];
+
+    // Get each row data
+    var rows = document.getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
+
+      // Get each column data
+      var cols = rows[i].querySelectorAll('td,th');
+
+      // Stores each csv row data
+      var csvrow = [];
+      for (var j = 0; j < cols.length; j++) {
+
+        // Get the text data of each cell of
+        // a row and push it to csvrow
+        csvrow.push(cols[j].innerHTML);
+      }
+
+      // Combine each column value with comma
+      csv_data.push(csvrow.join(","));
+    }
+    // combine each row data with new line character
+    csv_data = csv_data.join('\n');
+
+    /* We will use this function later to download
+    the data in a csv file downloadCSVFile(csv_data);
+    */
+  }
+
+  {% else %}
+  // Add the following code if you want the name of the file appear on select
+  var check_age = false
+  var check_cut = false
+  var check_path = false
+  document.querySelector('#input-age').addEventListener('change', () => { check_age = true; check() });
+  document.querySelector('#input-cut').addEventListener('change', () => { check_cut = true; check() });
+  document.querySelector('#customFile').addEventListener('change', () => { check_path = true; check() });
+
+  $(".custom-file-input").on("change", function () {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+  async function  check() {
+    if (check_age == true & check_cut == true & check_path == true) {
+      
+        if(parseInt(document.querySelector('#input-age').value) >= parseInt(document.querySelector('#input-cut').value)){
+          alert("Please Check Number of Age and Cut!\nNote that the age must be less than the cut number ><")
+          if(!document.querySelector('#btn-submit').classList.toString().includes("d-none")){
+                      document.querySelector('#btn-submit').classList.add('d-none')
+          }
+        }
+        else{
+          document.querySelector('#btn-submit').classList.remove('d-none')
+        }
+    }
+  }
+
+  {% endif %}
+</script>
+<!-- end form -->
+{% endblock %}
+{% block footer %}
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+  <p>
+    Website Made By
+    <a href="https://www.facebook.com/hoangkhang2k/">Vũ Hoàng Khang</a>
+  </p>
+</footer>
+
+{% endblock%}
